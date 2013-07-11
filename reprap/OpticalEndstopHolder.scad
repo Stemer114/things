@@ -1,7 +1,10 @@
 //-----------------------------------------------------------------------------------
-// 2013-07-09
-// holder for optical endstop (Gen7 v1.1 opto endstop)
+// holder for optical endstop (Gen7 v1.1 opto endstop, veroboard version)
 // for my custom Mendel90
+// for the y min endstop (the endstop holder is screwed onto the base plate)
+// (c) 2013 by Stemer114
+// License: licensed under the Creative Commons - GNU GPL license.
+//          http://www.gnu.org/licenses/gpl-2.0.html
 //-----------------------------------------------------------------------------------
 
 //-----------------------------------------------------------------------------------
@@ -116,33 +119,11 @@ module Bracket()
 //-----------------------------------------------------------------------------------
 
 //polyhole by nophead
+//http://hydraraptor.blogspot.de/2011/02/polyholes.html
 module polyhole(h, d) {
     n = max(round(2 * d),3);
     rotate([0,0,180])
         cylinder(h = h, r = (d / 2) / cos (180 / n), $fn = n);
-}
-
-/** Create a hexagon.
- *  with different sizes for base and top
- *  based on common.scad hexagon
- *  now abandonde because normal cylinder was used
- *
- * The 'size' parameter specifies the distance from the center of the
- * hexagon to the center of one of the six straight edges. The 'depth'
- * parameter specifies the size in the Z axis. The resulting object
- * is centered on the origin.
- */
-module hexagon2(length1, length2, depth = 2) {
-    width1 = 2 * length1 * tan(30);
-    union() {
-        cube(size = [ length1 * 2, width1, depth ], center = true);
-        rotate(a = [ 0, 0, 60 ]) {
-            cube(size = [ length1 * 2, width1, depth ], center = true);
-        }
-        rotate(a = [ 0, 0, -60 ]) {
-            cube(size = [ length * 2, width, depth ], center = true);
-        }
-    }
 }
 
 
