@@ -3,9 +3,13 @@ RepRap add-ons
 
 OpticalEndstopHolder
 
-Gen7 opto endstop holder on veroboard for my customized Mendel90. I am using
-optical endstops in a min setup for my Mendel90 and printed this endstop holder
-for the y min endstop.
+printed holder for optical endstop 
+Gen7 v1.3.1 opto endstop, veroboard version
+by Traumflug
+see http://reprap.org/wiki/Gen7_Endstop_1.3.1
+for my custom Mendel90
+for the y min endstop (the endstop holder is screwed onto the base plate)
+
 
 latest version:
 

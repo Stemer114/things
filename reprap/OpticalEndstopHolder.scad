@@ -1,5 +1,8 @@
 //-----------------------------------------------------------------------------------
-// holder for optical endstop (Gen7 v1.1 opto endstop, veroboard version)
+// printed holder for optical endstop 
+// Gen7 v1.3.1 opto endstop, veroboard version
+// by Traumflug
+// see http://reprap.org/wiki/Gen7_Endstop_1.3.1
 // for my custom Mendel90
 // for the y min endstop (the endstop holder is screwed onto the base plate)
 // (c) 2013 by Stemer114
@@ -119,7 +122,7 @@ module Bracket()
 //-----------------------------------------------------------------------------------
 
 //polyhole by nophead
-//http://hydraraptor.blogspot.de/2011/02/polyholes.html
+//see http://hydraraptor.blogspot.de/2011/02/polyholes.html
 module polyhole(h, d) {
     n = max(round(2 * d),3);
     rotate([0,0,180])
