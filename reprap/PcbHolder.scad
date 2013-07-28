@@ -28,21 +28,21 @@ F01 = true;  //enable cutout for hot glue mounting to base
 F02 = true;  //enable mounting bracket (for slot holes)
 
 //endstop pcb size plus tolerance
-P1 = 41;
-P2 = 21;
+P1 = 36;
+P2 = 12;
 P3 = 3;  //frame width
 P4 = 8;  //fixing bracket width
 P5 = 20; //fixing bracket length
 P6 = 3.2; //fixing slot width
 P7 = 14;  //fixing slot length
 
-P10 = 8;  //holder thickness
+P10 = 6;  //holder thickness
 P11 = 4;   //depth of pcb bed
 P12 = 4;   //fixing bracket thickness
 
 P20 = 1;   //corner radius for large block
 
-P21 = 5;  //width of frame for hot glue cutout
+P21 = 3;  //width of frame for hot glue cutout
 
 //-----------------------------------------------------------------------------------
 // libraries
