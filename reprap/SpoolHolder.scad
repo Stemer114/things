@@ -41,11 +41,11 @@ P9 = P1-P8; //holder bottom length
 P101 = 5;    //arm upper thickness (after cutout has been removed)
 P102 = 8;    //arm lower thickness
 
-P20 = 5;    //bracket thickness against stay
+P20 = 4;    //bracket thickness against stay
 P21 = 12;   //stay (MDF) thickness
 P22 = P20+P21;  //spool holder thickness
 
-P30 = 4.2;  //fixing hole dia
+P30 = 3.2;  //fixing hole dia
 P31 = 25;   //fixing hole spacing apart
 
 
