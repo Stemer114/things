@@ -27,18 +27,20 @@ ly = 0.4;  //layer thickness for printing
 //configuration settings
 //-----------------------------------------------------------------------------------
 
-P1 = 80;  //fan size (square)
-P2 = 95;  //fan offset (distance from mounting wall to middle of fan)
+P01 = 80;      //fan size
+P02 = 1;       //offset for loose fit of fan
+P1 = P01+P02;  //calulated fan size for loose fit
+P2 = 85;       //fan offset (distance from mounting wall to middle of fan)
 
 P3 = 5;   //outer wall thickness
 P4 = 10;  //outer wall height
-P5 = ly * 10; //base plate thickness (default 10 layers giving 4mm)
+P5 = ly * 6; //base plate thickness (default 10 layers giving 4mm)
 
 P10 = 3.6;  //mounting holes (wall) diameter
 P11 = 15;   //mounting holes offset from side
 
 P20 = 5;    //fan mounting holes diameter
-P21 = 4;    //fan mounting holes offset from edge
+P21 = 4+P02;    //fan mounting holes offset from edge
 P22 = 78;   //fanguard cutout
 
 //fanguard settings
@@ -47,13 +49,13 @@ P31 = 4;    //spoke inner dia
 P32 = P1/2; //spoke length
 P33 = 2;    //spoke thickness
 P34 = 6;    //spoke count
-P35 = 12;   //center piece dia
+P35 = 15;   //center piece dia
 
 //holder cutout (beside fan)
-P40 = 5;   //hole diameter
-P41 = 8;  //hole offset
-P42 = P2-P1/2-P3;
-P43 = P1;
+P40 = 5;  //corner diameter
+P41 = 6;  //corner offset from frame
+P42 = P2-P1/2-P3; //cutout dimension in x-direction (calculated)
+P43 = P1/2;         //cutout dimension in y-direction (calculated)
  
 //-----------------------------------------------------------------------------------
 // libraries
@@ -127,8 +129,17 @@ module Holder()
                 translate([0, 0, -de]) polyhole(P5+2*de, P22);
             }
  
-            //base plate cutout
+            //base plate cutout (twice)
             translate([P3+P42/2, P3+P43/2, 0])
+            {
+                hull() {
+                    translate([-P42/2+P41, -P43/2+P41, -de]) polyhole(P5+2*de, P40);
+                    translate([-P42/2+P41, +P43/2-P41, -de]) polyhole(P5+2*de, P40);
+                    translate([+P42/2-P41, -P43/2+P41, -de]) polyhole(P5+2*de, P40);
+                    translate([+P42/2-P41, +P43/2-P41, -de]) polyhole(P5+2*de, P40);
+                }
+            }
+            translate([P3+P42/2, P3+P43*3/2, 0])
             {
                 hull() {
                     translate([-P42/2+P41, -P43/2+P41, -de]) polyhole(P5+2*de, P40);
