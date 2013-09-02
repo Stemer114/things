@@ -70,7 +70,7 @@ P203 = 12;  //original thickness/depth
 //holder
 P211 = 4;    //thickness
 P212 = 3.2;  //mounting hole diameter (for M4 thread)
-P213 = 12;   //mounting hole offset from middle
+P213 = 14;   //mounting hole offset from middle
 //connector
 P221 = 4;    //thickness
 P222 = 9; //width
@@ -105,14 +105,16 @@ echo("hotend block assumed height (configured): ", P202);
 //P3: mount plate (v3 will use steel)
 P300 = P202;    //normal mounting position is right atop hotend
 P300ex = 10;    
-mountplate_length        = 70;
-mountplate_width         = 30;
-mountplate_thickness     = 2;
 P301 = 2;  //thickness
-mountplate_h1_dia        = 4;      //hole dia
-mountplate_h1_offset     = 25;     //hole offset from middle
-mountplate_cutout_length = 35+2; //cutout dimensions
-mountplate_cutout_width  = 12+2;
+P302 = 70; //length
+P303 = 30; //width
+P310 = 15+2;  //cutout length
+P311 = 15+2;  //cutout width (insulator od needs to fit)
+P320 = 4;     //outer rods mounting holes dia
+P321 = 25;    //outer rods mounting holes offset from center
+P330 = 4;     //hotend block screw mount diameter
+P331 = P213;  //hotend block srew mount offset from center 
+              //(needs to be in line with threaded holes in hotend holder)
 
 
 //P4: PTFE insulator
@@ -173,7 +175,7 @@ module HotendAssembly()
         }
 
         if (show_MountPlate) {
-            translate([-mountplate_length/2, -mountplate_width/2, P300+P300ex*ex])
+            translate([-P302/2, -P303/2, P300+P300ex*ex])
                 MountPlate();
         }
 
@@ -219,7 +221,7 @@ module HotEndv3()
                     drill_hole(P252, P251+de, 118);
                 //nozzle bore
                 translate([0, 0, -de])
-                    cylinder(h=P242+4*de, r=P243/2, center=false);
+                    cylinder(h=P242+4*de, r=P243/2, center=false, $fn=12);
             }
         }
     }
@@ -496,48 +498,71 @@ module MountPlate()
 		{
 			union()
 			{
-				cube([mountplate_length, mountplate_width, mountplate_thickness]);
+				cube([P302, P303, P301]);
 			}
 		
 			union()
 			{
 
+                //cutout
 				translate([
-					mountplate_length/2-mountplate_cutout_length/2,
-					-mountplate_cutout_width/2+mountplate_width/2, 
+					P302/2-P310/2,
+					-P311/2+P303/2, 
 					-0.1
 				])
 				cube([
-					mountplate_cutout_length, 
-					mountplate_cutout_width, 
-					mountplate_thickness+0.2
+					P310, 
+					P311, 
+					P301+0.2
 				]);
 
-				//mounting rod bore left
+				//outer mounting rod bore left
 				translate([
-					mountplate_length/2-mountplate_h1_offset, 
-					mountplate_width/2, 
-					mountplate_thickness/2
+					P302/2-P321, 
+					P303/2, 
+					P301/2
 				])
 				cylinder(
-					mountplate_thickness*1.2, 
-					mountplate_h1_dia/2, 
-					mountplate_h1_dia/2, center=true, $fn=32
+					P301*1.2, 
+					P320/2, 
+					P320/2, center=true, $fn=32
 				);
 
-				//mounting rod bore right
+				//outer mounting rod bore right
 				translate([
-					mountplate_length/2+mountplate_h1_offset, 
-					mountplate_width/2, 
-					mountplate_thickness/2
+					P302/2+P321, 
+					P303/2, 
+					P301/2
 				])
 				cylinder(
-					mountplate_thickness*1.2, 
-					mountplate_h1_dia/2, 
-					mountplate_h1_dia/2, center=true, $fn=32
+					P301*1.2, 
+					P320/2, 
+					P320/2, center=true, $fn=32
 				);
 
-				//cutout for hotend block
+				//hole for screw for mounting hotend holder (left)
+				translate([
+					P302/2-P331, 
+					P303/2, 
+					P301/2
+				])
+				cylinder(
+					P301*1.2, 
+					P330/2, 
+					P330/2, center=true, $fn=32
+				);
+
+				//hole for screw for mounting hotend holder (right)
+				translate([
+					P302/2+P331, 
+					P303/2, 
+					P301/2
+				])
+				cylinder(
+					P301*1.2, 
+					P330/2, 
+					P330/2, center=true, $fn=32
+				);
 
 			}
 		}
