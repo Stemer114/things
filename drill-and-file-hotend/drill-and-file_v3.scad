@@ -37,9 +37,9 @@ ex = 1;  //for explosions view set to 1 (or more to scale), 0 for mounted view
 //-----------------------------------------------------------------------------------
 // enable/disable hotend assembly components
 //-----------------------------------------------------------------------------------
-show_HotEnd     = false;
+show_HotEnd     = true;
 show_MountPlate = true;
-show_Insulator  = false;
+show_Insulator  = true;
 
 
 
@@ -68,7 +68,9 @@ P201 = 35;  //original width
 P202 = 20;  //original height
 P203 = 12;  //original thickness/depth
 //holder
-P211 = 4;  //thickness
+P211 = 4;    //thickness
+P212 = 3.2;  //mounting hole diameter (for M4 thread)
+P213 = 12;   //mounting hole offset from middle
 //connector
 P221 = 4;    //thickness
 P222 = 9; //width
@@ -151,9 +153,7 @@ drill_bit_angle = 118;  //angle of drill bit tip (normally 118 degrees for HSS d
 //if (show_debugging_cube)
 //	%cube(10);
 
-render() {
-    HotendAssembly();
-}
+HotendAssembly();
 
 
 
@@ -228,7 +228,17 @@ module HotEndv3()
 
 module HotEndHolder() {
     translate([0, 0, P211/2])
-        cube([P201, P203, P211], center=true);
+        difference() {
+            //holder base part
+            cube([P201, P203, P211], center=true);
+
+            //mounting bore left
+            translate([-P213, 0, -de])
+                cylinder(h=P211+4*de, r=P212/2, center=true, $fn=12);
+            //mounting bore right
+            translate([P213, 0, -de])
+                cylinder(h=P211+4*de, r=P212/2, center=true, $fn=12);
+         }
 }
 
 module HotEndConnector() {
