@@ -2,7 +2,7 @@
 // square ruler
 // (German: Schlosserwinkel mit Anschlag)
 //
-// 
+// https://github.com/Stemer114/things/tree/master/tools 
 //
 // (c) 2013 by Stemer114
 // License: licensed under the Creative Commons - GNU GPL license.
