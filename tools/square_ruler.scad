@@ -101,30 +101,6 @@ module SquareRuler()
 
 }  //end module SquareRuler
 
-module Bracket()
-{
-    difference()
-    {
-        union()
-        {
-            CubeRounded(P5, P4, P12, P20, corners=[1, 1, 0, 0]);
-            //cube([P5, P4, P12], center=false);
-        }
-
-        union()
-        {
-            hull() {
-            translate([(P5-P7)/2+P6/2, P4/2, -de])
-                polyhole(P12+2*de, P6);
-            translate([(P5-P7)/2+P7-P6/2, P4/2, -de])
-                polyhole(P12+2*de, P6);
-            }
-
-
-        }
-    }
-}
-
 
 //-----------------------------------------------------------------------------------
 // utility functions
