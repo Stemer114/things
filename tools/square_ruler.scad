@@ -26,6 +26,9 @@ ex = 0;  //offset for Explosivdarstellung, set to 0 for none
 // parametric settings (in mm)
 //-----------------------------------------------------------------------------------
 
+show_mirrored = false;
+//show_mirrored = true;
+
 P1  = 50;  //side 1 length
 P2  = 50;  //side 2 length
 P3  = 20;  //side 1 width
@@ -50,7 +53,11 @@ P30 =  4;  //corner cutout diameter (polyhole)
 //translate([0, 0, -10])
 //% cube(10, 10, 10);
 
-SquareRuler();
+if (show_mirrored) {
+    mirror([ 0, 1, 0 ]) SquareRuler();
+} else {
+    SquareRuler();
+}
 
 
 //-----------------------------------------------------------------------------------
