@@ -23,7 +23,7 @@ show_projection = false;   //enable for 2d projection (for dxf export)
    2 - side view (projected)
    3 - top view (projected)
 */
-projection_type = 3;
+projection_type = 1;
 
 
 //-----------------------------------------------------------------------------------
@@ -85,16 +85,16 @@ P222 = 9; //width
 P223 = 12; 
 //heater
 P231 = 8;   //height
-P232 = 22;  //width
+P232 = 25;  //width
 P233 = 12; //depth
 P234 = 5;    //heat resistor diameter
 P235 = 1.8;  //thermistor diameter
-P2361 = 7;    //resistor left offset x
+P2361 = 9;    //resistor left offset x
 P2362 = 4.5;    //              offset z
-P2363 = 7;    //resistor right offset x
+P2363 = 9;    //resistor right offset x
 P2364 = 4.5;  //               offset z
-P2365 = 4;    //thermistor offset x
-P2366 = 1.5;    //thermistor offset z
+P2365 = 5;    //thermistor offset x
+P2366 = 2;    //thermistor offset z
 //nozzle
 P241 = 4;    //height
 P242 = 1;    //nozzle length (length of 0.4/0.5 mm nozzle bore)
