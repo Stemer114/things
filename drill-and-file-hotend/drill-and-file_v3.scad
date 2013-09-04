@@ -17,6 +17,22 @@
 show_cross_section  = false;  //enable for cross section
 //show_debugging_cube = true;  //enable for debugging
 //show_explode = true;  //enable for explosion view - depreciated, set ex to 1 instead
+show_projection = false;   //enable for 2d projection (for dxf export)
+/* projection types
+   1 - side view, cut at center (fast)
+   2 - side view (projected)
+   3 - top view (projected)
+*/
+projection_type = 3;
+
+
+//-----------------------------------------------------------------------------------
+// which components to show
+//-----------------------------------------------------------------------------------
+show_HotEnd     = true;
+show_MountPlate = true;
+show_Insulator  = true;
+
 
 //-----------------------------------------------------------------------------------
 //color settings
@@ -33,14 +49,6 @@ color_mountplate       = "MediumSpringGreen";
 de = 0.1; //delta param, so differences are scaled and do not become manifold
 fn_hole = 12;  //fn setting for round holes/bores (polyhole)
 ex = 1;  //for explosions view set to 1 (or more to scale), 0 for mounted view
-
-//-----------------------------------------------------------------------------------
-// enable/disable hotend assembly components
-//-----------------------------------------------------------------------------------
-show_HotEnd     = true;
-show_MountPlate = true;
-show_Insulator  = true;
-
 
 
 /* explosion view: every component has to offset settings
@@ -155,7 +163,24 @@ drill_bit_angle = 118;  //angle of drill bit tip (normally 118 degrees for HSS d
 //if (show_debugging_cube)
 //	%cube(10);
 
-HotendAssembly();
+if (show_projection) {
+    //projection (for dxf export)
+    //in openscad compile (F6), then export to dxf
+    //the dxf can be opened with librecad and e.g. measured
+    if (projection_type == 1) {
+        //side view, cut at center
+        projection(cut=true) rotate([90, 0, 0]) HotendAssembly();
+    } else if (projection_type == 2) {
+        //top view, projected from outside
+        projection(cut=false) rotate([90, 0, 0]) HotendAssembly();
+    } else if (projection_type == 3) {
+        //top view
+        projection(cut=false) HotendAssembly();
+    }
+} else {
+    //3d view
+    HotendAssembly();
+}
 
 
 
