@@ -99,7 +99,7 @@ P2366 = 2;    //thermistor offset z
 P241 = 4;    //height
 P242 = 1;    //nozzle length (length of 0.4/0.5 mm nozzle bore)
 P243 = 0.5;  //nozzle bore diameter
-P244 = 12;   //nozzle top x
+P244 = 16;   //nozzle top x
 P245 = 12;   //nozzle top y
 P246 = 2;    //nozzle tip square (length)
 //filament/insulator bore
@@ -308,10 +308,20 @@ module HotEndHeater() {
 }
 
 
+// new version, uses hull in order to be able to scale the nozzle
+// differently in x and y direction
 module HotEndNozzle() {
-    //nozzle block lower
-    rotate([0, 0, 45])
-        cylinder(P241, P246/sqrt(2), P244/sqrt(2), center=false, $fn=4);
+
+    hull() {
+        //upper plate, where nozzle connects to heater
+        translate([0, 0, P241-de/2])
+            cube([P244, P245, de], center=true);
+
+        //lower plate, where nozzle bore exits
+        translate([0, 0, de/2])
+            cube([P246, P246, de], center=true);
+    }
+
 }
 
 // the insulator
