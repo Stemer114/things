@@ -171,7 +171,7 @@ module HotendAssembly()
     {
         if (show_HotEnd) {
             translate([0, 0, P200+P200ex*ex])
-                HotEndv3();
+                HotEnd();
         }
 
         if (show_MountPlate) {
@@ -181,7 +181,7 @@ module HotendAssembly()
 
         if (show_Insulator) {
             translate([0, 0, P400+P400ex*ex])
-                Insulatorv3();
+                Insulator();
         }
 
     }  //end union
@@ -196,7 +196,7 @@ module HotendAssembly()
    - heater block
    - nozzle
 */
-module HotEndv3()
+module HotEnd()
 {
     color(color_hotend)
     {
@@ -292,7 +292,7 @@ module HotEndNozzle() {
 // the insulator
 // made from PTFE 15mm rod
 // with inner PTFE sleeve made from 5mm PTFE rod
-module Insulatorv3()
+module Insulator()
 {
 
 	difference()
@@ -331,159 +331,6 @@ module Insulatorv3()
 	}
 }
 
-
-
-//-----------------------------------------------------------------------------------
-// old (v2) modules
-//-----------------------------------------------------------------------------------
-
-/* the hot end
-   consisting of heater block and nozzle block
-*/
-module HotEnd()
-{
-	//rod body
-	color(color_hotend, 0.5)
-	{
-		difference()
-		{
-			union()
-			{
-				translate([0, 0, nb_h])
-					HeaterBlock();
-				translate([(hb_w-nb_w)/2, 0, 0])
-					NozzleBlock();
-			}
-	
-			union()
-			{
-	
-			}
-		}
-	}
-}
-
-
-// the heater block, 
-// with bores for heating resistors and thermistor
-// without the nozzle
-module HeaterBlock()
-{
-	difference()
-	{
-		union()
-		{
-			cube([hb_w, hb_d, hb_h]);
-		}
-	
-		union()
-		{
-			//heater resistor bore left
-			rotate([90, 0, 0]) 
-			translate([6.5, 4, -hb_d/2])
-				cylinder(hb_d*1.1, dia_res/2, dia_res/2, center=true, $fn=32);
-
-			//heater resistor bore left
-			rotate([90, 0, 0]) 
-			translate([hb_w-6.5, 4, -hb_d/2])
-				cylinder(hb_d*1.1, dia_res/2, dia_res/2, center=true, $fn=32);
-
-			//thermistor bore
-			rotate([90, 0, 0]) 
-			translate([hb_w-11.5, hb_h-3, -hb_d/2])
-				cylinder(hb_d*1.1, dia_therm/2, dia_therm/2, center=true, $fn=32);
-
-			//filament-isolator sleeve bore
-			translate([hb_w/2, hb_d/2, hb_h/2])
-				cylinder(hb_h*1.1, dia_centr/2, dia_centr/2, center=true, $fn=32);
-
-
-		}
-	}
-}
-
-
-// the nozzle
-// with central bore
-// and nozzle bore
-module NozzleBlock()
-{
-	difference()
-	{
-		union()
-		{
-			//nozzle block upper
-			translate([0, 0, 4])
-				cube([nb_w, nb_d, nb_h-4]);
-
-			//nozzle block lower
-			translate([nb_w/2, nb_d/2, 0])
-			rotate([0, 0, 45])
-				cylinder(4, nozzle_square/sqrt(2), nb_w/sqrt(2), center=false, $fn=4);
-
-			//translate([0, 0, nozzle_len]) 
-			//	drill_hole(dia_centr, nb_h-nozzle_len+0.1, 118);
-
-		}
-	
-		union()
-		{
-			//filament-isolator sleeve bore
-			//translate([nb_w/2, nb_d/2, nozzle_len])
-			//	cylinder(nb_h-nozzle_len+0.1, dia_centr/2, dia_centr/2, center=false, $fn=32);
-			translate([nb_w/2, nb_d/2, nozzle_len]) 
-				drill_hole(dia_centr, nb_h-nozzle_len+0.1, 118);
-
-			//nozzle bore
-			translate([nb_w/2, nb_d/2, nozzle_len/2])
-				cylinder(nozzle_len+0.5, nozzle_dia/2, nozzle_dia/2, center=true, $fn=32);
-
-		}
-	}
-}
-
-
-// the insulator
-// made from PTFE 15mm rod
-// with inner PTFE sleeve made from 5mm PTFE rod
-module Insulator()
-{
-
-	difference()
-	{
-		union()
-		{
-			//rod body
-			color(color_insulator_rod, 0.5)
-			{
-			translate([0, 0, sleeve_delta])
-			cylinder(insulator_len, insulator_od/2, insulator_od/2, 
-					  center=true, $fn=32);
-			}
-
-			//sleeve body
-			color(color_insulator_sleeve, 0.5)
-			{
-			cylinder(insulator_len+sleeve_delta, sleeve_od/2, sleeve_od/2, 
-					  center=true, $fn=32);
-			}
-		}
-	
-		union()
-		{
-			//inner bore in rod
-			//actually need to make separate modules
-			//for rod and sleeve and join them
-			//translate([0, 0, sleeve_delta])
-			//cylinder(insulator_len, insulator_id/2, insulator_id/2, 
-			//		  center=true, $fn=32);
-
-			//inner bore in sleeve
-			cylinder(insulator_len+sleeve_delta, sleeve_id/2, sleeve_id/2, 
-					  center=true, $fn=32);
-		}
-	}
-}
 
 
 // the mount plate
