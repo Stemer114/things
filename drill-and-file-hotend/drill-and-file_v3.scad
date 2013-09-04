@@ -22,6 +22,7 @@ show_projection = false;   //enable for 2d projection (for dxf export)
    1 - side view, cut at center (fast)
    2 - side view (projected)
    3 - top view (projected)
+   4 - planned: top view, cut at z = bracket position
 */
 projection_type = 1;
 
