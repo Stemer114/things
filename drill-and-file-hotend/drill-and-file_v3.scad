@@ -22,7 +22,8 @@ show_projection = false;   //enable for 2d projection (for dxf export)
    1 - side view, cut at center (fast)
    2 - side view (projected)
    3 - top view (projected)
-   4 - planned: top view, cut at z = bracket position
+   4 - top view, cut at z = top of hotend block
+   5 - top view, cut at z = top of mountplate
 */
 projection_type = 1;
 
@@ -31,8 +32,8 @@ projection_type = 1;
 // which components to show
 //-----------------------------------------------------------------------------------
 show_HotEnd     = true;
-show_MountPlate = true;
-show_Insulator  = true;
+show_MountPlate = false;
+show_Insulator  = false;
 
 
 //-----------------------------------------------------------------------------------
@@ -177,12 +178,25 @@ if (show_projection) {
     } else if (projection_type == 3) {
         //top view
         projection(cut=false) HotendAssembly();
+    } else if (projection_type == 4) {
+        //top view, cut at z = top of hotend block
+        assign(hcut=P200+P200ex*ex + P211 + P221 + P231 + P241 - de) 
+        {
+            echo("projection_type", projection_type, " hcut", hcut);
+            projection(cut=true) translate([0, 0, -hcut]) HotendAssembly();
+        }
+    } else if (projection_type == 5) {
+        //top view, cut at z = top of hotend block
+        assign(hcut=P300+P300ex*ex + P301 - de) 
+        {
+            echo("projection_type", projection_type, " hcut", hcut);
+            projection(cut=true) translate([0, 0, -hcut]) HotendAssembly();
+        }
     }
 } else {
     //3d view
     HotendAssembly();
 }
-
 
 
 
