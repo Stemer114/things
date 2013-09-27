@@ -26,12 +26,20 @@ ex = 0;  //offset for Explosivdarstellung, set to 0 for none
 //-----------------------------------------------------------------------------------
 //configuration settings
 //-----------------------------------------------------------------------------------
+/* bracket alignment:
+   0 - brackets parallel at both length sides of the holder
+   1 - brackets in line at both width sides of holder 
+   (the latter makes it easier sliding the holder lengthwise, as one screw guides
+   while the other screw can be loosened or tightened)
+   I use the configuration for the z end stop for easy calibration
+ */
+bracket_alignment = 1; // 0 - parallel (at sides), 1 - in line (top and bottom)
 
 //endstop pcb size plus tolerance
-P1 = 41;
-P2 = 21;
+P1 = 41; //length
+P2 = 21; //width
 P3 = 3;  //frame width
-P4 = 8;  //fixing bracket width
+P4 = 10;  //fixing bracket width
 P5 = 20; //fixing bracket length
 P6 = 3.2; //fixing slot width
 P7 = 14;  //fixing slot length
@@ -58,14 +66,29 @@ P20 = 1;   //corner radius for large block
 
 HolderBase();
 
-//move the holders de into the base, so we are surly manifold
-translate([(P1+2*P3-P5)/2, -P4+de, 0])
-    Bracket();
+if (bracket_alignment == 0) {
+    //bracket configuration: two parallel brackets at the sides
 
-//ditto
-translate([P5+(P1+2*P3-P5)/2, P4+P2+2*P3-de, 0])
-rotate([0, 0, 180])
-    Bracket();
+    //move the holders de into the base, so we are surly manifold
+    translate([(P1+2*P3-P5)/2, -P4+de, 0])
+        SideBracket();
+
+    //ditto
+    translate([P5+(P1+2*P3-P5)/2, P4+P2+2*P3-de, 0])
+        rotate([0, 0, 180])
+        SideBracket();
+} else if (bracket_alignment == 1) {
+    //bracket configuration: two in line brackets at top and bottom
+    // (this configuration allows for better (parallel) alignment of the holder)
+
+    //move the holders de into the base, so we are surly manifold
+    translate([-P5, (P2+2*P3)/2 - P4/2, 0])
+        TopDownBracket();
+
+    //ditto
+    translate([P1+2*P3, (P2+2*P3)/2 - P4/2, 0])
+        TopDownBracket();
+}
 
 
 //-----------------------------------------------------------------------------------
@@ -92,13 +115,38 @@ module HolderBase()
     }
 }
 
-module Bracket()
+module SideBracket()
 {
     difference()
     {
         union()
         {
             CubeRounded(P5, P4, P12, P20, corners=[1, 1, 0, 0]);
+            //cube([P5, P4, P12], center=false);
+        }
+
+        union()
+        {
+            hull() {
+            translate([(P5-P7)/2+P6/2, P4/2, -de])
+                polyhole(P12+2*de, P6);
+            translate([(P5-P7)/2+P7-P6/2, P4/2, -de])
+                polyhole(P12+2*de, P6);
+            }
+
+
+        }
+    }
+}
+
+
+module TopDownBracket()
+{
+    difference()
+    {
+        union()
+        {
+            CubeRounded(P5, P4, P12, P20, corners=[0, 0, 0, 0]);
             //cube([P5, P4, P12], center=false);
         }
 
