@@ -47,9 +47,9 @@ $PSVPSCALE
   9
 $PINSBASE
  10
-110.0907813279252423
+105.0000000000000284
  20
-128.4458742524720947
+263.4476987447696956
  30
 0.0
   9
@@ -953,7 +953,7 @@ AcDbLayerTableRecord
   2
 Measure
  70
-0
+1
  62
 3
   6
@@ -983,7 +983,7 @@ CONTINUOUS
 290
 1
 370
-0
+13
 390
 F
   0
@@ -3695,9 +3695,9 @@ Measure
   6
 ByLayer
  10
--49.9865573481798506
+10.6767404044655994
  20
--9.5443588464162179
+-23.7800127190370176
  30
 0.0
  40
@@ -3709,7 +3709,7 @@ ByLayer
  72
 2
   1
-4mm thru
+5 mm thru
   7
 standard
  50
@@ -3735,9 +3735,9 @@ Measure
   6
 ByLayer
  10
-10.6767404044655994
+-75.5383901760565664
  20
--23.7800127190370176
+-9.1451114584806454
  30
 0.0
  40
@@ -3749,7 +3749,7 @@ ByLayer
  72
 2
   1
-5 mm thru
+3.2mm for M4 thread
   7
 standard
  50
@@ -3758,6 +3758,90 @@ standard
 0
  44
 1.0
+  0
+LINE
+  5
+93
+100
+AcDbEntity
+100
+AcDbLine
+  8
+H
+ 62
+256
+370
+-1
+  6
+ByLayer
+ 10
+13.9999999999999982
+ 20
+-6.0
+ 30
+0.0
+ 11
+14.0
+ 21
+6.0
+ 31
+0.0
+  0
+LINE
+  5
+94
+100
+AcDbEntity
+100
+AcDbLine
+  8
+H
+ 62
+256
+370
+-1
+  6
+ByLayer
+ 10
+-0.0000000000000006
+ 20
+-6.0
+ 30
+0.0
+ 11
+0.0000000000000001
+ 21
+6.0
+ 31
+0.0
+  0
+LINE
+  5
+95
+100
+AcDbEntity
+100
+AcDbLine
+  8
+H
+ 62
+256
+370
+-1
+  6
+ByLayer
+ 10
+-14.0000000000000018
+ 20
+-6.0
+ 30
+0.0
+ 11
+-14.0
+ 21
+6.0
+ 31
+0.0
   0
 ENDSEC
   0
@@ -3797,7 +3881,7 @@ E
   3
 AcDbVariableDictionary
 350
-93
+96
   0
 DICTIONARY
   5
@@ -4261,7 +4345,7 @@ Layout2
   0
 DICTIONARY
   5
-93
+96
 100
 AcDbDictionary
 281
@@ -4269,15 +4353,15 @@ AcDbDictionary
   3
 DIMASSOC
 350
-95
+98
   3
 HIDETEXT
 350
-94
+97
   0
 DICTIONARYVAR
   5
-94
+97
 100
 DictionaryVariables
 280
@@ -4287,7 +4371,7 @@ DictionaryVariables
   0
 DICTIONARYVAR
   5
-95
+98
 100
 DictionaryVariables
 280
