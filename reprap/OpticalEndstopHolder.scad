@@ -27,8 +27,8 @@ ex = 0;  //offset for Explosivdarstellung, set to 0 for none
 //configuration settings
 //-----------------------------------------------------------------------------------
 /* bracket alignment:
-   0 - brackets parallel at both length sides of the holder
-   1 - brackets in line at both width sides of holder 
+   0 - brackets parallel to sides 1
+   1 - brackets perpendicular to sides 1 (and in line with each other)
    (the latter makes it easier sliding the holder lengthwise, as one screw guides
    while the other screw can be loosened or tightened)
    I use the configuration for the z end stop for easy calibration
@@ -36,8 +36,8 @@ ex = 0;  //offset for Explosivdarstellung, set to 0 for none
 bracket_alignment = 1; // 0 - parallel (at sides), 1 - in line (top and bottom)
 
 //endstop pcb size plus tolerance
-P1 = 41; //length
-P2 = 21; //width
+P1 = 41; //length side 1 (which side is longer is up to you, depending
+P2 = 21; //length side 2  where you want the brackets located)
 P3 = 3;  //frame width
 P4 = 10;  //fixing bracket width
 P5 = 20; //fixing bracket length
@@ -71,23 +71,26 @@ if (bracket_alignment == 0) {
 
     //move the holders de into the base, so we are surly manifold
     translate([(P1+2*P3-P5)/2, -P4+de, 0])
-        SideBracket();
+        ParallelBracket();
 
     //ditto
     translate([P5+(P1+2*P3-P5)/2, P4+P2+2*P3-de, 0])
         rotate([0, 0, 180])
-        SideBracket();
+        ParallelBracket();
+
 } else if (bracket_alignment == 1) {
     //bracket configuration: two in line brackets at top and bottom
     // (this configuration allows for better (parallel) alignment of the holder)
 
     //move the holders de into the base, so we are surly manifold
-    translate([-P5, (P2+2*P3)/2 - P4/2, 0])
-        TopDownBracket();
+    translate([(P1+2*P3)/2 - P4/2, de, 0])
+        rotate([0, 0, -90])
+        PerpendicularBracket();
 
     //ditto
-    translate([P1+2*P3, (P2+2*P3)/2 - P4/2, 0])
-        TopDownBracket();
+    translate([(P1+2*P3)/2 - P4/2, P2+2*P3+P5-de, 0])
+        rotate([0, 0, -90])
+        PerpendicularBracket();
 }
 
 
@@ -115,7 +118,7 @@ module HolderBase()
     }
 }
 
-module SideBracket()
+module ParallelBracket()
 {
     difference()
     {
@@ -140,7 +143,7 @@ module SideBracket()
 }
 
 
-module TopDownBracket()
+module PerpendicularBracket()
 {
     difference()
     {
