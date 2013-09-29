@@ -2,7 +2,8 @@
 -----------------------------------------------------------------------------------
  signaling strip for optical endstop
  Z-endstop
- can be attached to platform 
+ can be attached to rear x-rod
+ (endstop is attached to left column of gantry)
  for my custom Mendel90
 
  (c) 2013 by Stemer114

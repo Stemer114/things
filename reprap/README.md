@@ -1,15 +1,13 @@
 RepRap add-ons
 =====
 
-OpticalEndstopHolder
-
-printed holder for optical endstop 
-Gen7 v1.3.1 opto endstop, veroboard version
-by Traumflug
-see http://reprap.org/wiki/Gen7_Endstop_1.3.1
-for my custom Mendel90
-for the y min endstop (the endstop holder is screwed onto the base plate)
-
+- OpticalEndstopHolder: generic optical endstop holder
+- OpticalEndstopStrip: strip for triggering optical y endstop
+- OpticalEndstopStripZ: for triggering optical z endstop
+  (can be fixed to rear x rod)
+- PcbHolder: generic PCB holder
+- SpoolHolder: just another spool holder (mounted on top of back stays)
+- FanHolder: fan mount for cooling the sanguinololu electronics
 
 latest version:
 
