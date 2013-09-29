@@ -36,24 +36,38 @@ de = 0.1; //delta param, so differences are scaled and do not become manifold
 fn_hole = 12;  //fn setting for round holes/bores (polyhole)
 ex = 0;  //offset for Explosivdarstellung, set to 0 for none
 
+show_block1 = true;  //holding block with strip
+show_block2 = true;  //holding block at rear of rod
+
 //-----------------------------------------------------------------------------------
 //parametric settings
 //-----------------------------------------------------------------------------------
 
-//holding block
+//holding blocks
+P20 = 1.0;   //gap width between holding blocks
+
+//holding block - strip side
 P21 = 8;    //rod diameter
-P22 = 5;    //block width beside rod
+P22 = 9;    //block width beside rod
 P23 = 10;   //block depth
-P24 = 14;   //block length in rod direction
+P24 = 16;   //block length in rod direction
 P25 = 3;    //dia for cable tie bore
 P26 = 5;    //offset of cable tie bore from left side (here: upper side)
 P27 = 10;   //dia of notch for tigthening cable tie
 P28 = 3;    //offset of notch at back of holding block
 
+//holding block - rear side
+P33 = 6;    //depth (thinner)
+P34 = 10;   //length (shorter)
+P35 = 5.5;  //nut trap wrench size
+P36 = 3.5;  //nut trap depth (nyloc nut)
+
 //strip
 P11 = 6;    //width
 P12 = 30-P22;   //length (up to rod underside)
-P13 = 2;  //thickness
+P13 = 2.0;  //thickness
+P14 = 1.2;  //lower thickness
+P15 = 15;   //length of lower thickness
 
 
 
@@ -76,96 +90,66 @@ module StripZ()
     {
         union()
         {
+            //holding block with strip
+            if (show_block1) {
             //strip
-           translate([0, 0, 0])
-               cube([P12, P11, P13], center=false);
+            translate([0, 0, 0])
+                union() {
+                    //upper part (base thickness)
+                    translate([P15, 0, 0]) cube([P12-P15, P11, P13], center=false);
+                    //lower part (thinner)
+                    cube([P15, P11, P14], center=false);
+                }
 
-           //holding block
-           translate([P12, 0, 0])
-               cube([P21+2*P22, P23, P24], center=false);
+            //holding block - strip side
+            translate([P12, 0, 0])
+                cube([P21+2*P22, P23, P24], center=false);
 
-           //notch for tigthening cable tie
-            translate([P12+P22+P21/2, P27/2-P28, 0])
-                polyhole(h=P24, d=P27);
+            //notch for tigthening cable tie
+            //translate([P12+P22+P21/2, P27/2-P28, 0])
+                //polyhole(h=P24, d=P27);
+            }
 
 
+            //holding block at rear of rod, gap to holding block 1
+            if (show_block2) {
+                translate([P12, P23+P20, P24-P34])
+                    cube([P21+2*P22, P33, P34], center=false);
+
+            }
         }
 
         union()
         {
-            //cutout in block for rod
-            translate([P12+P22+P21/2, P23, -de])
-                //rotate([0, 0, 0])
+            //cutout in blocks for rod
+            //(moved half gap width into gap)
+            translate([P12+P22+P21/2, P23+P20/2, -de])
                 polyhole(h=P24+2*de, d=P21);
 
-            //upper cable tie bore (here: right bore)
-            translate([P12+P22+P21+P22/2, -de, P24-P26])
+                //upper bore (here: right bore)
+                translate([P12+P22+P21+P22/2, -de, P24-P26])
                 rotate([-90, 0, 0])
-                polyhole(h=P23+2*de, d=P25);
+                polyhole(h=P23+P20+P33+2*de, d=P25);
 
-            //lower cable tie bore (here: left bore)
+            //lower bore (here: left bore)
             translate([P12+P22/2, -de, P24-P26])
                 rotate([-90, 0, 0])
-                polyhole(h=P23+2*de, d=P25);
+                polyhole(h=P23+P20+P33+2*de, d=P25);
 
-        }
-    }
-}
-
-
-
-module Strip()
-{
-    difference()
-    {
-        union()
-        {
-            //holder
-           cube([P2+P3, P1, P6], center=false);
-
-           //strip upper part
-           translate([P2+P3, (P1-P5)/2, 0])
-               cube([P4-P41, P5, P6], center=false);
-
-           //strip lower part (thinner)
-           translate([P2+P3+P4-P41, (P1-P5)/2, 0])
-               cube([P41, P5, P61], center=false);
-
-
-           //bracket transversal
-           translate([P2, 0, 0])
-               cube([P3, P1, P7], center=false);
-
-           //bracket longitudinal
-           translate([P2+P3, P1/2-P3/2, 0])
-               cube([P4-P41, P3, P7], center=false);
-
-
-        }
-
-        union()
-        {
-            //slot hole left
-            hull() {
-            translate([P2/2, P8+P9/2, -de])
-                polyhole(P3+2*de, P9);
-            translate([P2/2, P8+P10-P9/2, -de])
-                polyhole(P3+2*de, P9);
-            }
-
-            //slot hole right 
-            translate([0, -P8+P1-P8-P10])
-            hull() {
-            translate([P2/2, P8+P9/2, -de])
-                polyhole(P3+2*de, P9);
-            translate([P2/2, P8+P10-P9/2, -de])
-                polyhole(P3+2*de, P9);
-            }
+            //nut trap in block2 left
+            translate([P12+P22/2, P23+P20+P33-P36+de, P24-P26])
+                rotate([-90,90,0])
+                cylinder(r = P35 / 2 / cos(180 / 6) + 0.05, h=P36, $fn=6);
+            //nut trap in block2 right
+            translate([P12+P22+P21+P22/2, P23+P20+P33-P36+de, P24-P26])
+                rotate([-90,90,0])
+                cylinder(r = P35 / 2 / cos(180 / 6) + 0.05, h=P36, $fn=6);
 
 
         }
     }
 }
+
 
 
 //-----------------------------------------------------------------------------------
