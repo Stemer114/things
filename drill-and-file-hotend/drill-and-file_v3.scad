@@ -32,8 +32,8 @@ projection_type = 1;
 // which components to show
 //-----------------------------------------------------------------------------------
 show_HotEnd     = true;
-show_MountPlate = false;
-show_Insulator  = false;
+show_MountPlate = true;
+show_Insulator  = true;
 
 
 //-----------------------------------------------------------------------------------
