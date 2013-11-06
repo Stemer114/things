@@ -16,8 +16,8 @@
 //-----------------------------------------------------------------------------------
 show_cross_section  = false;  //enable for cross section
 //show_debugging_cube = true;  //enable for debugging
-//show_explode = true;  //enable for explosion view - depreciated, set ex to 1 instead
-show_projection = false;   //enable for 2d projection (for dxf export)
+show_explode = false;  //enable for explosion view - depreciated, set ex to 1 instead
+show_projection = true;   //enable for 2d projection (for dxf export)
 /* projection types
    1 - side view, cut at center (fast)
    2 - side view (projected)
@@ -50,7 +50,7 @@ color_mountplate       = "MediumSpringGreen";
 //-----------------------------------------------------------------------------------
 de = 0.1; //delta param, so differences are scaled and do not become manifold
 fn_hole = 12;  //fn setting for round holes/bores (polyhole)
-ex = 1;  //for explosions view set to 1 (or more to scale), 0 for mounted view
+ex = 0;  //for explosions view set to 1 (or more to scale), 0 for mounted view
 
 
 /* explosion view: every component has to offset settings
