@@ -1,7 +1,7 @@
 //-----------------------------------------------------------------------------------
 // drill adapter for 15mm PTFE 
 //
-// http://www.thingiverse.com/thing:
+// http://www.thingiverse.com/thing:184583
 // https://github.com/Stemer114/things/tree/master/tools 
 //
 // (c) 2013 by Stemer114@gmail.com
@@ -26,7 +26,7 @@ ex = 0;  //offset for Explosivdarstellung, set to 0 for none
 // parametric settings (in mm)
 //-----------------------------------------------------------------------------------
 
-P1 = 15.2;  //PTFE rod diameter
+P1 = 15.4;  //PTFE rod diameter plus tolerance
 P2 = 24;    //OD
 P3 = P2+2*10;  //bracket length
 P4 = 2;       //gap width
